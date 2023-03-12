@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-import { createError } from "../middlewares/error.js";
+const { createError } = require("../utils/error");
 const Conversation = require("../models/conversation");
 
 //get conv of a user
-export const getUserConversation = async (req, res, next) => {
+module.exports.getUserConversation = async (req, res, next) => {
   try {
     const conversation = await Conversation.find({
       members: { $in: [req.params.userId] },
@@ -15,7 +15,7 @@ export const getUserConversation = async (req, res, next) => {
 };
 
 // get conv includes two userId
-export const getUsersConversation = async (req, res, next) => {
+module.exports.getUsersConversation = async (req, res, next) => {
   try {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstUserId, req.params.secondUserId] },
@@ -27,7 +27,7 @@ export const getUsersConversation = async (req, res, next) => {
 };
 
 //new conv
-export const createConversation = async (req, res, next) => {
+module.exports.createConversation = async (req, res, next) => {
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId],
   });

@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongooseUniqueValidator = require("mongoose-unique-validator");
-import { createError } from "../middlewares/error.js";
-import { validateRequest } from "../middlewares/validateRequest.js";
+const { createError } = require("../utils/error");
+const { validateRequest } = require("../middlewares/validateRequest");
 const User = require("../models/user");
 
-export const register = async (req, res, next) => {
+module.exports.register = async (req, res, next) => {
   validateRequest(req);
   const { username, email, password } = req.body;
   let existeUser;
@@ -78,7 +78,7 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
+module.exports.login = async (req, res, next) => {
   validateRequest(req);
   const { email, password } = req.body;
   let userExists;

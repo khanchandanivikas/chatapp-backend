@@ -1,10 +1,10 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createConversation,
   getUserConversation,
   getUsersConversation,
-} from "../controllers/conversation.js";
-import { verifyUser } from "../middlewares/verifyToken.js";
+} = require("../controllers/conversation");
+const { verifyUser } = require("../middlewares/verifyToken");
 
 const router = express.Router();
 //new conv
@@ -14,6 +14,10 @@ router.post("/", createConversation);
 router.get("/:userId", verifyUser, getUserConversation);
 
 // get conv includes two userId
-router.get("/find/:firstUserId/:secondUserId", verifyUser, getUsersConversation);
+router.get(
+  "/find/:firstUserId/:secondUserId",
+  verifyUser,
+  getUsersConversation
+);
 
-export default router;
+module.exports = router;

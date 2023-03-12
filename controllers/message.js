@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-import { createError } from "../middlewares/error.js";
+const { createError } = require("../utils/error");
 const Message = require("../models/message");
 
 //new msg
-export const getUserMessages = async (req, res, next) => {
+module.exports.getUserMessages = async (req, res, next) => {
   try {
     const messages = await Message.find({
       conversationId: req.params.conversationId,
@@ -15,7 +15,7 @@ export const getUserMessages = async (req, res, next) => {
 };
 
 //new msg
-export const createMessage = async (req, res, next) => {
+module.exports.createMessage = async (req, res, next) => {
   const newMessage = new Message(req.body);
   try {
     const sess = await mongoose.startSession();

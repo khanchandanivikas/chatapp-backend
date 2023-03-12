@@ -1,7 +1,7 @@
-import { createError } from "../middlewares/error.js";
+const { createError } = require("../utils/error");
 const User = require("../models/user");
 
-export const getUser = async (req, res, next) => {
+module.exports.getUser = async (req, res, next) => {
   const userId = req.params.userId;
   try {
     const user = await User.findById(userId, "-password").populate("conversations");
