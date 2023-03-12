@@ -1,8 +1,8 @@
 import express from "express";
 import {
   getUser,
-} from "../controllers/users.js";
-import { verifyUser } from "../utils/verifyToken.js";
+} from "../controllers/user.js";
+import { verifyUser } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 

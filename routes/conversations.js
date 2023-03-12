@@ -4,7 +4,7 @@ import {
   getUserConversation,
   getUsersConversation,
 } from "../controllers/conversation.js";
-import { verifyUser } from "../utils/verifyToken.js";
+import { verifyUser } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 //new conv

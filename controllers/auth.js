@@ -1,10 +1,9 @@
-import User from "../models/User.js";
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongooseUniqueValidator = require("mongoose-unique-validator");
-import { createError } from "../utils/error.js";
-import { validateRequest } from "../utils/validateRequest.js";
+import { createError } from "../middlewares/error.js";
+import { validateRequest } from "../middlewares/validateRequest.js";
 const User = require("../models/user");
 
 export const register = async (req, res, next) => {
