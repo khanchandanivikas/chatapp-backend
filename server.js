@@ -1,6 +1,6 @@
 const express = require("express");
 const db_connection = require("./db_connection");
-const { router } = require("./router");
+// const { router } = require("./router");
 const { config } = require("./config");
 // const { socket } = require("./socket");
 
@@ -10,7 +10,7 @@ const app = express();
 config(app);
 
 //* routes *//
-router(app);
+// router(app);
 
 //* Error handler *//
 app.use((err, req, res, next) => {
@@ -26,7 +26,7 @@ app.use((err, req, res, next) => {
 });
 
 //* Run server *//
-const server = app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || 5000, () => {
   //* MongoDB connection *//
   db_connection();
   console.log("Listening ");
