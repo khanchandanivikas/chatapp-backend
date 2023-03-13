@@ -2,7 +2,7 @@ module.exports.socket = (server) => {
   // socket
   const io = require("socket.io")(server, {
     cors: {
-      origin: "https://chatapp-backend-pvfh.onrender.com",
+      origin: "https://dev-chat-app.vercel.app",
     },
   });
 
