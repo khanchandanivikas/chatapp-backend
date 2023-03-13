@@ -1,10 +1,8 @@
-const cors = require("cors");
-app.use(cors());
 module.exports.socket = (server) => {
   // socket
   const io = require("socket.io")(server, {
     cors: {
-      origin: "*",
+      origin: "https://chatapp-backend-pvfh.onrender.com",
     },
   });
 
