@@ -2,7 +2,7 @@ const express = require("express");
 const db_connection = require("./db_connection");
 const { router } = require("./router");
 const { config } = require("./config");
-// const { socket } = require("./socket");
+const { socket } = require("./socket");
 
 const app = express();
 
@@ -26,11 +26,11 @@ app.use((err, req, res, next) => {
 });
 
 //* Run server *//
-app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
   //* MongoDB connection *//
   db_connection();
   console.log("Listening ");
 });
 
 //* socket.io *//
-// socket(server);
+socket(server);
