@@ -1,6 +1,6 @@
 const express = require("express");
 const db_connection = require("./db_connection");
-// const { router } = require("./router");
+const { router } = require("./router");
 const { config } = require("./config");
 // const { socket } = require("./socket");
 
@@ -10,7 +10,7 @@ const app = express();
 config(app);
 
 //* routes *//
-// router(app);
+router(app);
 
 //* Error handler *//
 app.use((err, req, res, next) => {
