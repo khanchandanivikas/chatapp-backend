@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongooseUniqueValidator = require("mongoose-unique-validator");
+// const cloudinary = require("../utils/cloudinary");
 const { createError } = require("../utils/error");
 const { validateRequest } = require("../middlewares/validateRequest");
 const User = require("../models/user");
@@ -20,23 +21,25 @@ module.exports.register = async (req, res, next) => {
   if (existeUser) {
     return next(createError(401, "A user already exists with this e-mail."));
   } else {
-    let result;
-    try {
-      result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "chatApp",
-      });
-    } catch (err) {
-      return next(
-        createError(500, "There was some error. It was not possible to save the datas.")
-      );
-    }
+    // let result;
+    // try {
+    //   result = await cloudinary.uploader.upload(req.file.path, {
+    //     folder: "chatApp",
+    //   });
+    //   console.log(result)
+    // } catch (err) {
+    //   console.log(err);
+    //   return next(
+    //     createError(500, "There was some error. It was not possible to save the datas.")
+    //   );
+    // }
     let hashedPassword;
     hashedPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       username: username,
       email: email,
       password: hashedPassword,
-      profilePicture: result.secure_url,
+      profilePicture: "testurl",
     });
     try {
       const sess = await mongoose.startSession();
@@ -46,6 +49,7 @@ module.exports.register = async (req, res, next) => {
       });
       await sess.commitTransaction();
     } catch (err) {
+      console.log(err);
       return next(
         createError(500, "There was some error. It was not possible to save the datas.")
       );
@@ -63,6 +67,7 @@ module.exports.register = async (req, res, next) => {
         }
       );
     } catch (err) {
+      console.log(err);
       return next(
         createError(500, "There was some error. It was not possible to save the datas.")
       );
