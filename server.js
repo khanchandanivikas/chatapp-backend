@@ -2,7 +2,7 @@ const express = require("express");
 const db_connection = require("./db_connection");
 const { router } = require("./router");
 const { config } = require("./config");
-const { socket } = require("./socket");
+// const { socket } = require("./socket");
 
 const app = express();
 
@@ -33,4 +33,4 @@ app.listen(process.env.PORT || 5000, () => {
 });
 
 //* socket.io *//
-socket(server);
+// socket(server);
