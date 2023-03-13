@@ -6,10 +6,11 @@ const db_connection = () => {
   mongoose.connection.on("disconnected", () => {
     console.log("mongoDB disconnected!");
   });
+  mongoose.set("strictQuery", false);
   mongoose
     .connect(URI)
     .then(() => {
-      console.log("\x1b[36m%s\x1b[0m", "BD connected");
+      console.log("BD connected");
     })
     .catch((error) => console.log("connection error", error));
 };
