@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongooseUniqueValidator = require("mongoose-unique-validator");
-// const cloudinary = require("../utils/cloudinary");
+const cloudinary = require("../utils/cloudinary");
 const { createError } = require("../utils/error");
 const { validateRequest } = require("../middlewares/validateRequest");
 const User = require("../models/user");
 
 module.exports.register = async (req, res, next) => {
-  validateRequest(req);
+  validateRequest(req, res, next);
   const { username, email, password } = req.body;
   let existeUser;
   try {
@@ -21,24 +21,23 @@ module.exports.register = async (req, res, next) => {
   if (existeUser) {
     return next(createError(401, "A user already exists with this e-mail."));
   } else {
-    // let result;
-    // try {
-    //   result = await cloudinary.uploader.upload(req.file.path, {
-    //     folder: "chatApp",
-    //   });
-    // } catch (err) {
-    //   return next(
-    //     createError(500, "There was some error. It was not possible to save the datas.")
-    //   );
-    // }
+    let result;
+    try {
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "chatApp",
+      });
+    } catch (err) {
+      return next(
+        createError(500, "There was some error. It was not possible to save the datas.")
+      );
+    }
     let hashedPassword;
     hashedPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       username: username,
       email: email,
       password: hashedPassword,
-      // profilePicture: result.public_id,
-      profilePicture: "testurl",
+      profilePicture: result.secure_url,
     });
     try {
       const sess = await mongoose.startSession();
@@ -81,7 +80,7 @@ module.exports.register = async (req, res, next) => {
 };
 
 module.exports.login = async (req, res, next) => {
-  validateRequest(req);
+  validateRequest(req, res, next);
   const { email, password } = req.body;
   let userExists;
   try {
@@ -127,5 +126,6 @@ module.exports.login = async (req, res, next) => {
       username: userExists.username,
       email: userExists.email,
       profilePicture: userExists.profilePicture,
+      token: token
     });
 };
