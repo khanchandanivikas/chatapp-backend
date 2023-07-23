@@ -1,13 +1,13 @@
 const express = require("express");
 const { check } = require("express-validator");
-const upload = require("../utils/multer");
+// const upload = require("../utils/multer");
 const { login, register } = require("../controllers/auth");
 
 const router = express.Router();
 
 router.post(
   "/register",
-  upload.single("image"),
+  // upload.single("image"),
   [
     check("username").not().isEmpty(),
     check("email").not().isEmpty(),

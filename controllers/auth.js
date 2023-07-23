@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const mongooseUniqueValidator = require("mongoose-unique-validator");
-const cloudinary = require("../utils/cloudinary");
+// const mongooseUniqueValidator = require("mongoose-unique-validator");
+// const cloudinary = require("../utils/cloudinary");
 const { createError } = require("../utils/error");
 const { validateRequest } = require("../middlewares/validateRequest");
 const User = require("../models/user");
@@ -21,23 +21,23 @@ module.exports.register = async (req, res, next) => {
   if (existeUser) {
     return next(createError(401, "A user already exists with this e-mail."));
   } else {
-    let result;
-    try {
-      result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "chatApp",
-      });
-    } catch (err) {
-      return next(
-        createError(500, "There was some error. It was not possible to save the datas.")
-      );
-    }
+    // let result;
+    // try {
+    //   result = await cloudinary.uploader.upload(req.file.path, {
+    //     folder: "chatApp",
+    //   });
+    // } catch (err) {
+    //   return next(
+    //     createError(500, "There was some error. It was not possible to save the datas.")
+    //   );
+    // }
     let hashedPassword;
     hashedPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
       username: username,
       email: email,
       password: hashedPassword,
-      profilePicture: result.secure_url,
+      // profilePicture: result.secure_url,
     });
     try {
       const sess = await mongoose.startSession();
@@ -72,8 +72,8 @@ module.exports.register = async (req, res, next) => {
       userId: newUser.id,
       username: newUser.username,
       email: newUser.email,
-      password: newUser.password,
-      profilePicture: newUser.profilePicture,
+      // password: newUser.password,
+      // profilePicture: newUser.profilePicture,
       token: token,
     });
   }
@@ -125,7 +125,7 @@ module.exports.login = async (req, res, next) => {
       userId: userExists.id,
       username: userExists.username,
       email: userExists.email,
-      profilePicture: userExists.profilePicture,
+      // profilePicture: userExists.profilePicture,
       token: token
     });
 };
