@@ -18,7 +18,7 @@ getUserConversation);
 // get conv includes two userId
 router.get(
   "/find/:firstUserId/:secondUserId",
-  verifyUser,
+  // verifyUser,
   getUsersConversation
 );
 
