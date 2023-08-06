@@ -10,3 +10,12 @@ module.exports.getUser = async (req, res, next) => {
     return next(createError(500, "There was some unknown error."));
   }
 };
+
+module.exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    return next(createError(500, "There was some unknown error."));
+  }
+};
